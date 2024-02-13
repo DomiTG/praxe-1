@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operace s textem</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-zinc-900">
+    <div class="flex flex-col items-center justify-center min-h-screen">
+        <div class="border border-zinc-700 p-4 rounded-lg w-96">
+            <form>
+                <label for="inputText" class="text-zinc-100">Vstupní text</label>
+                <input type="text" id="inputText" class="border border-zinc-700 rounded-lg p-2 w-full bg-zinc-800 text-zinc-100" placeholder="Zadejte text">
+                <button type="button" onclick="reverseString()" class="bg-zinc-700 text-zinc-100 rounded-lg p-2 w-full mt-2">Obrátit</button>
+                <button type="button" onclick="splitIntoWords()" class="bg-zinc-700 text-zinc-100 rounded-lg p-2 w-full mt-2">Rozdělit</button>
+                <button type="button" onclick="countOccurrences()" class="bg-zinc-700 text-zinc-100 rounded-lg p-2 w-full mt-2">Počet Výskytů</button>
+                <button type="button" onclick="replaceWords()" class="bg-zinc-700 text-zinc-100 rounded-lg p-2 w-full mt-2">Změnit slova</button>
+                <button type="button" onclick="findText()" class="bg-zinc-700 text-zinc-100 rounded-lg p-2 w-full mt-2">Hledat text</button>
+                <div class="mt-4 w-full border border-zinc-700 rounded-lg p-2 bg-zinc-800">
+                    <label for="result" class="text-zinc-100">VÝSLEDEK</label>
+                    <div id="result" class="text-zinc-100"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        function reverseString() {
+            const inputText = document.getElementById('inputText').value;
+            const reversedText = inputText.split('').reverse().join('');
+            document.getElementById('result').innerText = reversedText;
+        }
+
+        function splitIntoWords() {
+            const inputText = document.getElementById('inputText').value;
+            document.getElementById('result').innerText = inputText.split(' ').join(', ');
+        }
+
+        function countOccurrences() {
+            const inputText = document.getElementById('inputText').value;
+            const searchWord = prompt('Zadejte slovo pro počet výskytů:');
+            const occurrences = (inputText.split(" ").filter(word => word === searchWord)).length;
+            document.getElementById('result').innerText = `Počet výskytů slova "${searchWord}": ${occurrences}`;
+        }
+
+        function replaceWords() {
+            const inputText = document.getElementById('inputText').value;
+            const oldWord = prompt('Zadejte slovo k nahrazení:');
+            const newWord = prompt('Zadejte nové slovo:');
+            const replacedText = inputText.replaceAll(oldWord, newWord);
+            document.getElementById('result').innerText = replacedText;
+        }
+
+        function findText() {
+            const inputText = document.getElementById('inputText').value;
+            const searchText = prompt('Zadejte text k vyhledání:');
+            const regex = new RegExp(searchText, 'gi');
+            let match;
+            const matches = [];
+            while ((match = regex.exec(inputText)) !== null) {
+                matches.push(match.index);
+            }
+            document.getElementById('result').innerText = `Pozice textu "${searchText}": ${matches.join(', ')}`;
+        }
+    </script>
+</body>
+</html>
